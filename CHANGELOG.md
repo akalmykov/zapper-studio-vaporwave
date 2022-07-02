@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.100.4](https://github.com/Zapper-fi/studio/compare/v0.100.3...v0.100.4) (2022-07-02)
+
+
+### Bug Fixes
+
+* refactor aurora-plus's helper making it injectable ([#818](https://github.com/Zapper-fi/studio/issues/818)) ([ecb109d](https://github.com/Zapper-fi/studio/commit/ecb109ddcca20d6a5af46b3d5d0e1f45b5373718))
+
 ## [0.100.3](https://github.com/Zapper-fi/studio/compare/v0.100.2...v0.100.3) (2022-07-01)
 
 
