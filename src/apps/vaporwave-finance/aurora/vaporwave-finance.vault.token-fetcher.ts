@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { compact, isNull } from "lodash";
+import { compact, isNull, valuesIn } from "lodash";
 import Axios from 'axios';
 
 import { EthersMulticall } from '~multicall';
@@ -35,6 +35,7 @@ export type VaporwaveVaultDetails = {
 
   logo: string
   status: string // check for retired
+  assets: string[]
 };
 
 
@@ -93,9 +94,6 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
     const baseTokenPrices = await Axios.get("https://api.vaporwave.farm/prices").then(
       (v) => v.data
     )
-    // const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(
-    //   network
-    // );
     const multicall = this.appToolkit.getMulticall(network);
 
     const tokens = await Promise.all(
@@ -161,6 +159,14 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
         const secondaryLabel = buildDollarDisplayItem(price);
         // And for a tertiary label, we'll use the APY
         const tertiaryLabel = `${(apyData[vault.id] * 100).toFixed(3)}% APY`;
+        const images: string[] = []
+        if (vault.logo) {
+          images.push(`https://raw.githubusercontent.com/VaporwaveFinance/vwave-app-pub/main/src/${vault.logo}`)
+        } else {
+          vault.assets.forEach(
+            (asset) => images.push(`https://raw.githubusercontent.com/VaporwaveFinance/vwave-app-pub/main/src/single-assets/${asset}.svg`)
+          )
+        }
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
           appId,
@@ -179,7 +185,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
           },
           displayProps: {
             label: label,
-            images: [`https://raw.githubusercontent.com/VaporwaveFinance/vwave-app-pub/main/src/${vault.logo}`],
+            images: images,
             secondaryLabel: secondaryLabel,
             tertiaryLabel: tertiaryLabel,
           },
