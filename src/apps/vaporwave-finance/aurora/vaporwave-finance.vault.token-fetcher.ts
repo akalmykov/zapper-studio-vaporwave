@@ -164,7 +164,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
           images.push(`https://raw.githubusercontent.com/VaporwaveFinance/vwave-app-pub/main/src/${vault.logo}`)
         } else {
           vault.assets.forEach(
-            (asset) => images.push(`https://raw.githubusercontent.com/VaporwaveFinance/vwave-app-pub/main/src/single-assets/${asset}.svg`)
+            (asset) => images.push(`https://raw.githubusercontent.com/VaporwaveFinance/vwave-app-pub/main/src/single-assets/${asset}.png`)
           )
         }
         const token: AppTokenPosition = {
